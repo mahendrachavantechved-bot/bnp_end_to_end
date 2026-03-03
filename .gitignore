@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment / secrets
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flet build output (do not commit)
+.flet/
+flet_build/
+build/
+
+# Keep the JSON data files tracked (teammates can run immediately)
+# If files are too large, uncomment below:
+# retail_applicants.json
+# sme_applicants.json
+# retail_applicants.csv
+# sme_applicants.csv

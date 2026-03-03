@@ -1,0 +1,27 @@
+[project]
+name = "loan-processing-demo"
+version = "1.0.0"
+description = "End-to-End Loan Processing Demo - Retail + SME with Sarvam Voice"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Your Name", email = "you@example.com" }
+]
+dependencies = [
+  "flet>=0.24.0",
+  "matplotlib>=3.7.0",
+  "numpy>=1.24.0",
+  "requests>=2.31.0",
+]
+
+[tool.flet]
+org = "com.loandemoindia"
+product = "LoanDemo"
+company = "Loan Demo India"
+copyright = "Copyright (C) 2026 Loan Demo India"
+
+[tool.flet.app]
+module = "main"
+
+[tool.flet.permissions]
+permissions = ["microphone"]
