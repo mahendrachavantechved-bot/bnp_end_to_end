@@ -1,0 +1,69 @@
+name: Build & Deploy Loan Demo → GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:          # allows manual trigger from Actions tab
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  UV_PYTHON: "3.12"
+  FLET_CLI_NO_RICH_OUTPUT: 1  # cleaner CI logs
+
+jobs:
+  # ── Job 1: Build the Flet static web app ──────────────────────────────────
+  build:
+    name: Build web app
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup uv (fast Python package manager)
+        uses: astral-sh/setup-uv@v6
+
+      - name: Build Flet static web app (Pyodide / WASM)
+        shell: bash
+        run: |
+          uv run flet build web \
+            --yes \
+            --verbose \
+            --base-url ${GITHUB_REPOSITORY#*/} \
+            --route-url-strategy hash
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+          name: web-build-artifact
+          retention-days: 14
+
+  # ── Job 2: Deploy (only on push to main) ─────────────────────────────────
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: web-build-artifact
