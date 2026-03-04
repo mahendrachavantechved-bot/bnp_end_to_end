@@ -7,7 +7,7 @@ Endpoints used:
   STT  : POST https://api.sarvam.ai/speech-to-text        (saaras:v3)
   TL   : POST https://api.sarvam.ai/translate              (mayura:v1)
 
-Authentication: header  api-subscription-key: <YOUR_KEY>
+Authentication: header  api-subscription-key: sk_aqm3d74w_15Z1tgVdVhrLR6CVjS8tpIiq
 
 How to get your key:
   1. Go to https://dashboard.sarvam.ai
@@ -21,7 +21,7 @@ import json
 
 # ── Put your real key here ──────────────────────────────────────────────────
 # Option A: hardcode for local dev/demo
-SARVAM_KEY = os.environ.get("SARVAM_API_KEY", "YOUR_SARVAM_API_KEY_HERE")
+SARVAM_KEY = os.environ.get("sk_aqm3d74w_15Z1tgVdVhrLR6CVjS8tpIiq", "YOUR_SARVAM_API_KEY_HERE")
 
 # Option B (recommended for production): set environment variable before running
 #   export SARVAM_API_KEY="your-real-key"
